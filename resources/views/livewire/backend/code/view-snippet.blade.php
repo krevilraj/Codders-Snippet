@@ -1,0 +1,3 @@
+<div>
+   {!! $code->template !!}
+</div>

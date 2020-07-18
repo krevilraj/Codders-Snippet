@@ -1,0 +1,9 @@
+.selectedRows{
+    background: #007bff !important;
+}
+.validation_error{
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
