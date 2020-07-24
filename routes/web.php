@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome'); // website design
+  return view('welcome'); // website design
 });
 
 Auth::routes();
@@ -22,17 +22,17 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home'); //
 
 Route::group([
-    'prefix' => 'dashboard',
-    'as' => 'dashboard.',
-    'namespace' => 'backend',
-    'middleware' => 'auth'
+  'prefix' => 'dashboard',
+  'as' => 'dashboard.',
+  'namespace' => 'backend',
+  'middleware' => 'auth'
 ], function () {
-    Route::get('/index', function () {
-        return view('backend.Dashboard.index');
-    });
-    Route::get('/category', function () {
-        return view('backend.Category.category');
-    });
+  Route::get('/index', function () {
+    return view('backend.Dashboard.index');
+  });
+  Route::get('/category', function () {
+    return view('backend.Category.category');
+  });
   Route::get('/snippet', function () {
     return view('livewire.backend.snippet.index');
   });
@@ -52,13 +52,39 @@ Route::group([
   Route::livewire('/store-snippet', 'backend.code.add-snippet');
   Route::livewire('/list-snippet', 'backend.code.list-snippet');
   Route::livewire('/view-snippet/{id}', 'backend.code.view-snippet');
-  Route::livewire('/create-snippet/{id}', 'backend.code.create-snippet');
+  Route::livewire('/create-snippet/{id}', 'backend.code.create-variable');
+  Route::livewire('/edit-snippet/{id}', 'backend.code.edit-snippet');
 //  Route::livewire('/snippet/store', 'backend.code.add-snippet');
 //  Route::get('/snippet/store', function(){
 //    return view('backend.Snippet.add-snippet');
 //  });
-//  Route::get('/snippet/store','Backend\CodeController@code');
+  Route::post('/show-template', 'Backend\CodeController@showtemplate');
+  Route::post('/get-suggestion', 'Backend\CodeController@suggestion');
 });
 
+Route::group([
+  'prefix' => 'user',
+  'as' => 'user.',
+  'namespace' => 'backend',
+  'middleware' => 'auth',
+  'layout' => 'layouts.app',
+  'section' => 'content'
+], function () {
 
+
+  Route::get('/index', 'DashboardController@index')->name("dashboard");
+
+  Route::livewire('/category', 'backend.category.category')->name("category");
+  Route::livewire('/store-snippet', 'backend.code.add-snippet')->name("snippet.store");
+  Route::livewire('/list-snippet', 'backend.code.list-snippet')->name("snippet.list");
+  Route::livewire('/view-snippet/{id}', 'backend.code.view-snippet');
+  Route::livewire('/create-snippet/{id}', 'backend.code.create-variable');
+  Route::livewire('/edit-snippet/{id}', 'backend.code.edit-snippet');
+//  Route::livewire('/snippet/store', 'backend.code.add-snippet');
+//  Route::get('/snippet/store', function(){
+//    return view('backend.Snippet.add-snippet');
+//  });
+  Route::post('/show-template', 'CodeController@showtemplate');
+  Route::post('/get-suggestion', 'CodeController@suggestion');
+});
 Route::get('/all-address', 'HomeController@all'); 

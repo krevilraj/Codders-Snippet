@@ -26,16 +26,18 @@
             <td>{{$code->group}}</td>
             <td>{{$code->shortcode}}</td>
             <td>
-              <a href="/dashboard/view-snippet/{{$code->id}}">
+              <a href="/user/create-snippet/{{$code->id}}">
                 <button title="Use Snippet" type="button" class="btn btn-info btn-flat  " id="name-{{$code->id}}"
                         data-name="{{$code->title}}">
                   <span class="far fa-file" aria-hidden="true"></span>
                 </button>
               </a>
-              <button title="Edit" type="button" class="btn btn-info btn-flat  " id="name-{{$code->id}}"
-                      data-name="{{$code->title}}" onclick="editRow({{$code->id}})">
-                <span class="far fa-edit" aria-hidden="true"></span>
-              </button>
+              <a href="/user/edit-snippet/{{$code->id}}">
+                <button title="Edit" type="button" class="btn btn-info btn-flat  " id="name-{{$code->id}}"
+                        data-name="{{$code->title}}" onclick="editRow({{$code->id}})">
+                  <span class="far fa-edit" aria-hidden="true"></span>
+                </button>
+              </a>
               <button title="Delete" onclick="confirm('Are you sure to delete?') && deleteRow({{$code->id}})"
                       type="button"
                       class="btn btn-danger btn-flat  ">

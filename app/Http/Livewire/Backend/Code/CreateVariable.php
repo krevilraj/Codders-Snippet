@@ -9,6 +9,7 @@ class CreateVariable extends Component
 {
   public $code;
 
+
   public function mount($id)
   {
     $this->code = Code::find($id);

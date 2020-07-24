@@ -10,9 +10,9 @@ class ViewSnippet extends Component
   public $view_id;
   public $code;
 
-  public function mount($id)
+  public function mount($template)
   {
-    $this->code = Code::find($id);
+    dd($template);
   }
 
   public function render()

@@ -1,3 +1,6 @@
 <div>
-   {!! $code->template !!}
+   @php
+
+   var_dump($template);
+   @endphp
 </div>

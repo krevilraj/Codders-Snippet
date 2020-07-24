@@ -46,8 +46,8 @@ class AddSnippet extends Component
       'user_id' => auth()->user()->id
     ]);
 
-    preg_match_all('/\^(.*?)\^/', $this->template, $matches, PREG_OFFSET_CAPTURE);
-    foreach ($matches[1] as $data){
+    preg_match_all('/\[(.*?)\]/', $this->template, $matches, PREG_OFFSET_CAPTURE);
+    foreach ($matches[1] as $data) {
 //      echo $data[0];
 //      $variable[] = explode(',',$data[0]);
       $variable[] = $data[0];
@@ -55,15 +55,20 @@ class AddSnippet extends Component
     }
     $variables = array_unique($variable);
 
-    foreach($variables as $variable){
+    //['name','default_value','placeholder','type']
+    foreach ($variables as $variable) {
       $type = 'text';
       $placeholder = '';
-      $field = explode(',',$variable);
-      if(isset($field[1])){
-        $type = $field[1];
+      $value = '';
+      $field = explode(',', $variable);
+      if (isset($field[1])) {
+        $value = $field[1];
       }
-      if(isset($field[2])){
+      if (isset($field[2])) {
         $placeholder = $field[2];
+      }
+      if (isset($field[3])) {
+        $type = $field[3];
       }
 
 
@@ -72,10 +77,12 @@ class AddSnippet extends Component
 //      echo '<br>';
       Variable::create([
         'code_id' => $code->id,
-        'variable' => $field[0],
+        'value' => $value,
+        'name' => $field[0],
         'type' => $type,
-        'placeholder' => ucwords($placeholder?$placeholder:$field[0])
+        'placeholder' => ucwords($placeholder ? $placeholder : $field[0])
       ]);
+
     }
 
 

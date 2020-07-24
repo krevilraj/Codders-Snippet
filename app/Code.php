@@ -14,4 +14,8 @@ class Code extends Model
   {
     return $this->hasOne('App\Category','id','category_id');
   }
+
+  public function variable(){
+    return $this->hasMany('App\Variable');
+  }
 }

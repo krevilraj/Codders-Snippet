@@ -16,7 +16,8 @@ class CreateVariablesTable extends Migration
         Schema::create('variables', function (Blueprint $table) {
             $table->id();
             $table->integer('code_id')->foreign('code_id')->references('id')->on('codes');            
-            $table->string('variable');
+            $table->string('name');
+            $table->string('value');
             $table->string('type');
             $table->string('placeholder')->nullable();
             $table->timestamps();

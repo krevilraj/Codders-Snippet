@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Variable extends Model
 {
   protected $fillable = [
-    'code_id', 'variable', 'type', 'placeholder'
+    'code_id', 'name','value', 'type', 'placeholder'
   ];
 }

@@ -1,0 +1,44 @@
+﻿/* Place Your Custom Styles Here */
+.mgauto {
+    margin: 0 auto;
+}
+
+ul.menu-child {
+    padding-left: 18px;
+}
+
+ul.menu-child li a {
+    font-size: 15px !important;
+}
+
+#change-variable {
+    position: fixed;
+    top: 0;
+    z-index: 999999999 !important;
+}
+
+.footer-button {
+    background: #fff !important;
+    border-top: unset !important;
+}
+
+.header-button {
+    background: #fff !important;
+    border-bottom: unset !important;
+}
+
+.footer-button button {
+    float: right !important;
+}
+
+.selectedRows {
+    background: #007bff !important;
+}
+
+.validation_error {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+

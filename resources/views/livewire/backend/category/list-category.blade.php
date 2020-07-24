@@ -1,8 +1,8 @@
 <div class='col-md-8'>
 
   <div class='card'>
-    <div class='card-header'>
-      <h3 class='card-title'>DataTable with default features</h3>
+    <div class='card-header header-button'>
+      <h3 class='card-title'>All Category</h3>
 
 
     </div>
