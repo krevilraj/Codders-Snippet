@@ -73,7 +73,7 @@
                 @enderror
               </div>
 
-              <div class="form-group">
+              <div class="form-group" wire:ignore>
                 <label for="exampleInputEmail1">Group</label>
 
                 <input type="text" id="group" wire:model.debounce.500ms="group"
@@ -82,6 +82,7 @@
                 @error('group')<span id="exampleInputEmail1-error"
                                      class="error invalid-feedback">{{ $message }}</span>
                 @enderror
+
               </div>
 
             </div>
@@ -101,9 +102,49 @@
 
 
 <!-- /.content -->
-
+@push('styles')
+  <link href="{{ asset('backend/easy-autocomplete/dist/easy-autocomplete.css') }}" rel="stylesheet">
+@endpush
 @push('scripts')
+  <script src="{{asset('backend/easy-autocomplete/dist/jquery.easy-autocomplete.min.js')}}"></script>
+  <script>
+    var options = {
 
+      url: function(phrase) {
+        return "/user/group-list";
+      },
+
+      getValue: function(element) {
+        return element.group;
+      },
+      list: {
+        onSelectItemEvent: function() {
+          var selectedItemValue = $("#group").getSelectedItemData().group;
+        @this.set('group', selectedItemValue);
+          $("#group").val(selectedItemValue).trigger("change");
+        },
+        onHideListEvent: function() {
+          // $("#inputTwo").val("").trigger("change");
+        }
+      },
+      ajaxSettings: {
+        dataType: "json",
+        method: "GET",
+        data: {
+          dataType: "json"
+        }
+      },
+
+      preparePostData: function(data) {
+        data.phrase = $("#group").val();
+        return data;
+      },
+
+      requestDelay: 400
+    };
+
+    $("#group").easyAutocomplete(options);
+  </script>
   <script src="{{asset('backend/ckeditor/ckeditor.js')}}"></script>
   <script src="{{asset('backend/rangyinputs-jquery-src.js')}}"></script>
   <script>
@@ -121,9 +162,11 @@
 
       function reportSelection() {
         $ta = $("textarea.cke_source");
-        var sel = $ta.getSelection();
-        $startIndex.text(sel.start);
-        $endIndex.text(sel.end);
+        if ($("#id").length) {
+          var sel = $ta.getSelection();
+          $startIndex.text(sel.start);
+          $endIndex.text(sel.end);
+        }
       }
 
       $(document).on("click", "#change-variable", function (e) {

@@ -75,16 +75,19 @@ Route::group([
   Route::get('/index', 'DashboardController@index')->name("dashboard");
 
   Route::livewire('/category', 'backend.category.category')->name("category");
+  Route::livewire('/instant-template', 'backend.template.instant-template')->name("template");
   Route::livewire('/store-snippet', 'backend.code.add-snippet')->name("snippet.store");
   Route::livewire('/list-snippet', 'backend.code.list-snippet')->name("snippet.list");
   Route::livewire('/view-snippet/{id}', 'backend.code.view-snippet');
   Route::livewire('/create-snippet/{id}', 'backend.code.create-variable');
   Route::livewire('/edit-snippet/{id}', 'backend.code.edit-snippet');
+  Route::livewire('/category/{category_id}', 'backend.code.category-wise');
 //  Route::livewire('/snippet/store', 'backend.code.add-snippet');
 //  Route::get('/snippet/store', function(){
 //    return view('backend.Snippet.add-snippet');
 //  });
   Route::post('/show-template', 'CodeController@showtemplate');
   Route::post('/get-suggestion', 'CodeController@suggestion');
+  Route::get('/group-list', 'CodeController@getgroup');
 });
 Route::get('/all-address', 'HomeController@all'); 

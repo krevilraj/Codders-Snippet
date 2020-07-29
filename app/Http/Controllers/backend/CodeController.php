@@ -30,5 +30,8 @@ class CodeController extends Controller
     return view('backend.code.view-snippet', compact('template'));
   }
 
+  public function getgroup(Request $request){
+    return getGrouplist("%".$request->phrase."%");
+  }
 
 }

@@ -56,6 +56,7 @@ class EditSnippet extends Component
     $code = Code::find($this->code_id);
     $code->update($input);
 
+    $variable = [];
     preg_match_all('/\[(.*?)\]/', $this->template, $matches, PREG_OFFSET_CAPTURE);
     foreach ($matches[1] as $data) {
       $variable[] = $data[0];

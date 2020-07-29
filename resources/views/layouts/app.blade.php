@@ -94,6 +94,9 @@
               <a href="{{route('user.category')}}">Category</a>
             </li>
             <li>
+              <a href="{{route('user.template')}}">Instant Template</a>
+            </li>
+            <li>
               <a href="<?php echo e(route('logout')); ?>"
                  onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

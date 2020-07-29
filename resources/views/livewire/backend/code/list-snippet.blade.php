@@ -1,107 +1,109 @@
-<div class='col-md-12'>
-
-  <div class='card'>
-    <div class='card-header'>
-      <h3 class='card-title'>DataTable with default features</h3>
-
-
+<section id="about">
+  <div class="container">
+    <div class="section-title h2 text-center mb-5">
+      <h2 class="mb-0">All Snippet</h2>
+      <span class="title-letter">S</span>
     </div>
-    <!-- /.card-header -->
-    <div class='card-body'>
-      <table class='example1 table table-bordered table-striped'>
-        <thead>
-        <tr>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Group</th>
-          <th>Shortcode</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($codes as $code)
-          <tr>
-            <td>{{$code->title}}</td>
-            <td>{{$code->category->name}}</td>
-            <td>{{$code->group}}</td>
-            <td>{{$code->shortcode}}</td>
-            <td>
-              <a href="/user/create-snippet/{{$code->id}}">
-                <button title="Use Snippet" type="button" class="btn btn-info btn-flat  " id="name-{{$code->id}}"
-                        data-name="{{$code->title}}">
-                  <span class="far fa-file" aria-hidden="true"></span>
-                </button>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline">
+          @foreach(getCategories() as $category)
+            <li class="list-inline-item pb-3">
+              <a class="btn btn-xs btn-light btn-pill" href="/user/category/{{$category->id}}">{{$category->name}}</a>
+            </li>
+          @endforeach
+        </ul>
+      </div>
+      <div class="col-md-12">
+
+
+        @foreach(getCategories() as $category)
+          <?php $group = getGroup($category->id);?>
+          @if(count($group))
+            <h2>{{$category->name}}</h2>
+            <ul>
+              @foreach(getGroup($category->id) as $group_name)
+                <h6 class="text-muted">{{$group_name}}</h6>
+                <div class="list-group">
+                  <ul>
+                    @foreach(getCode($group_name) as $code)
+                      <li>
+                        <p>
+
+                <span>
+                  <a href="/user/create-snippet/{{$code->id}}" data-toggle="tooltip" data-placement="top"
+                     title="Use Snipppet"><i class="far fa-file"
+                                             aria-hidden="true"></i></a>
+                  <a class="text-success" href="/user/edit-snippet/{{$code->id}}" title="Edit Snipppet"
+                     data-toggle="tooltip"
+                     data-placement="top"><i class="far fa-edit"
+                                             aria-hidden="true"></i></a>
+                   <a class="text-danger" title="Delete"
+                      onclick="confirm('Are you sure to delete?') && deleteRow({{$code->id}})"
+                   >
+                <i class="far fa-trash-alt" aria-hidden="true"></i>
               </a>
-              <a href="/user/edit-snippet/{{$code->id}}">
-                <button title="Edit" type="button" class="btn btn-info btn-flat  " id="name-{{$code->id}}"
-                        data-name="{{$code->title}}" onclick="editRow({{$code->id}})">
-                  <span class="far fa-edit" aria-hidden="true"></span>
-                </button>
-              </a>
-              <button title="Delete" onclick="confirm('Are you sure to delete?') && deleteRow({{$code->id}})"
-                      type="button"
-                      class="btn btn-danger btn-flat  ">
-                <span class="far fa-trash-alt" aria-hidden="true"></span>
-              </button>
-            </td>
-          </tr>
+
+                </span>
+                          {{$code->title}}
+                          <small>({{$code->group}})</small>
+                        </p>
+                      </li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endforeach
+            </ul>
+          @endif
         @endforeach
 
-        </tbody>
-        <tfoot>
-        <tr>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Group</th>
-          <th>Shortcode</th>
-          <th>Action</th>
-        </tr>
-        </tfoot>
-      </table>
+      </div>
     </div>
-    <!-- /.card-body -->
   </div>
-  <!-- /.card -->
-</div>
-
+</section>
+@push('styles')
+  <link href="{{ asset('backend/easy-autocomplete/dist/easy-autocomplete.css') }}" rel="stylesheet">
+@endpush
 
 @push('scripts')
-  <!-- DataTables -->
-  <script src="{{asset('backend/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-  <script src="{{asset('backend/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-  <script src="{{asset('backend/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-  <script src="{{asset('backend/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-
-
+  <script src="{{asset('backend/easy-autocomplete/dist/jquery.easy-autocomplete.min.js')}}"></script>
   <script>
+    var options = {
+
+      url: function(phrase) {
+        return "/user/group-list";
+      },
+
+      getValue: function(element) {
+        return element.group;
+      },
+
+      ajaxSettings: {
+        dataType: "json",
+        method: "GET",
+        data: {
+          dataType: "json"
+        }
+      },
+
+      preparePostData: function(data) {
+        data.phrase = $("#example-ajax-post").val();
+        return data;
+      },
+
+      requestDelay: 400
+    };
+
+    $("#example-ajax-post").easyAutocomplete(options);
+  </script>
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
     function deleteRow(id) {
       window.livewire.emit('deleteRow', id)
     }
-
-    function editRow(id) {
-      $('.selectedRows').removeClass("selectedRows");
-      $('#name-' + id).closest('tr').addClass("selectedRows");
-      var inputfield = $('#insertinput');
-      inputfield.attr("title", "Edit Category name")
-      inputfield.tooltip('show');
-      window.livewire.emit('editRow', id)
-    }
-
-    $(function () {
-      $('.example1').dataTable({
-        "responsive": true,
-        "autoWidth": false,
-      });
-      $('[data-toggle="tooltip"]').on("mouseleave", function () {
-        $(this).tooltip("hide");
-      })
-    });
-    window.livewire.on('refresh_table', message => {
-      $('.example1').dataTable({
-        "responsive": true,
-        "autoWidth": false,
-      });
-    });
   </script>
 
 @endpush

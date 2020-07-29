@@ -1,5 +1,6 @@
 <?php
 
+use App\Code;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
+//      factory(Code::class,20)->create();
       $user = User::create([
         'id' => 1,
         'name' => 'Rajkumar',

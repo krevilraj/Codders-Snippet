@@ -42,3 +42,6 @@ ul.menu-child li a {
     color: #dc3545;
 }
 
+.code-group-list a:not(:last-child){
+    border-bottom: 1px solid #dedede;
+}
